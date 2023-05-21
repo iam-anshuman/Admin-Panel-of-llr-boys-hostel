@@ -1,0 +1,15 @@
+.bodyColor{
+    --bs-body-color: var(--bs-dark);
+}
+
+.passwordImage{
+    background:url("../public/assets/img/dogs/20602817_6321602.jpg") center / cover no-repeat;
+}
+
+.loginImage{
+    background: url("../public/assets/img/dogs/Mobile login.gif") center / contain no-repeat;
+}
+.registerImage{
+    background: url("../public/assets/img/dogs/Fotor_AI (1).png") center / cover no-repeat;
+}
+
