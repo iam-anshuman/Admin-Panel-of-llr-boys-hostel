@@ -30,8 +30,8 @@ export default function Student(){
                             <div className="col-md-6 text-nowrap">
                                 <div id="dataTable_length" className="dataTables_length" aria-controls="dataTable">
                                     <label className="form-label">Show&nbsp;<select
-                                        className="d-inline-block form-select form-select-sm">
-                                        <option value="10" selected="">10</option>
+                                        className="d-inline-block form-select form-select-sm" defaultValue={10}>
+                                        <option value="10" defaultValue={10}>10</option>
                                         <option value="25">25</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -57,13 +57,13 @@ export default function Student(){
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {hosteler.map((item,index)=>{
-                                    return  <tr>
+                                {hosteler.map((item)=>{
+                                    return  <tr key={item.id}>
                                     <td><img className="rounded-circle me-2" width="30" height="30"
-                                             src="assets/img/avatars/avatar1.jpeg" alt={" "} key={item.index}/>{item.name}</td>
+                                             src="assets/img/avatars/avatar1.jpeg" alt={" "} />{item.name}</td>
                                     <td>{item.phone}</td>
-                                    <td>{item.Room_number}</td>
                                     <td>{item.email}</td>
+                                    <td>{item.Room_number}</td>
                                     <td>{item.Payment}</td>
                                 </tr>
                                 })}

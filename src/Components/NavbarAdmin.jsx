@@ -32,14 +32,14 @@ export default function NavbarAdmin(){
                                 className="fas fa-table"></i><span>Students</span></Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/StudentQuery"><i
                                 className="fas fa-user"></i><span>StudentQuery</span></Link></li>
+                            <li className="nav-item"><Link className="nav-link" to="/AddStudent"><i
+                                className="fas fa-users"></i><span>Add Students</span></Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/Login"><i
                                 className="far fa-user-circle"></i><span>Login</span></Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/Register"><i
                                 className="fas fa-user-circle"></i><span>Register</span></Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/ForgetPassword"><i
                                 className="fas fa-key"></i><span>Forgotten Password</span></Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/404"><i
-                                className="fas fa-exclamation-circle"></i><span>Page Not Found</span></Link></li>
                             <li className="nav-item"></li>
                         </ul>
                         <div className="text-center d-none d-md-inline">

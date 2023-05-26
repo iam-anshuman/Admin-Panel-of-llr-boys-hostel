@@ -5,7 +5,7 @@ import {Route, Routes} from "react-router-dom";
 import ForgetPassword from "./ForgetPassword";
 import Login from "./Login";
 import Register from "./Register";
-import FourZeroFour from "./FourZeroFour";
+import AddStudent from "./AddStudent";
 import StudentQuery from "./StudentQuery";
 export default function Content(){
     return(
@@ -18,7 +18,7 @@ export default function Content(){
                     <Route path={"/ForgetPassword"} element={<ForgetPassword/>}/>
                     <Route path={"/Login"} element={<Login/>}/>
                     <Route path={"/Register"} element={<Register/>}/>
-                    <Route path={"/404"} element={<FourZeroFour/>}/>
+                    <Route path={"/AddStudent"} element={<AddStudent/>}/>
                     <Route path={"/StudentQuery"} element={<StudentQuery/>}/>
                 </Routes>
             </div>
