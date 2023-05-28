@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import {collection , addDoc} from "firebase/firestore";
+import {collection , addDoc ,serverTimestamp} from "firebase/firestore";
 import {fireDB} from "../DB_and_Auth";
 import MyModal from "./MyModal";
 import {Link} from "react-router-dom";
 export default function AddStudent(){
     const [student , setStudent] = useState({
+        "TimeStamp":String,
         "Name":String,
         "Phone_Number":Number,
         "Email":String,
@@ -14,9 +15,10 @@ export default function AddStudent(){
     const [isSubmit,setIsSubmit] = useState(false)
 
     const handleSubmit = async ()=>{
-        console.log(student.Name,student.Phone_Number,student.Email,student.Room_Number,student.Payment);
+        // console.log(student.Name,student.Phone_Number,student.Email,student.Room_Number,student.Payment);
         try{
             await addDoc((collection(fireDB,"Hostelers")),{
+                timestamp:serverTimestamp(),
                 name:student.Name,
                 phone:student.Phone_Number,
                 email:student.Email,
@@ -26,7 +28,7 @@ export default function AddStudent(){
             setIsSubmit(true);
             setStudent({
                 Name:"",
-                Phone_Number:null,
+                Phone_Number:"",
                 Email:"",
                 Room_Number:"",
                 Payment:""

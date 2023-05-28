@@ -1,6 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
+import {signInWithEmailAndPassword} from "firebase/auth"
+import {auth} from "../DB_and_Auth";
 export default function Login(){
+    const [loginDetail,setLoginDetail] = useState({
+        email : "",
+        password : ""
+    });
+    const currentUser = auth.currentUser;
+    currentUser?console.log("Email : ",currentUser.email,"UID : ",currentUser.uid):console.log("No one is logged in");
+    const handleLogin = async ()=>{
+        try {
+            const res = await signInWithEmailAndPassword(auth,loginDetail.email,loginDetail.password);
+            const currentUser = res.user;
+            console.log(currentUser.email,currentUser.uid)
+
+        }catch (error) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log("Error Code : ",errorCode);
+                console.log("Error Message : ",errorMessage);
+            
+        }
+    }
+    
+    
     return(
         <>
             <div className="container">
@@ -23,10 +47,10 @@ export default function Login(){
                                                                              type="email" id="exampleInputEmail"
                                                                              aria-describedby="emailHelp"
                                                                              placeholder="Enter Email Address..."
-                                                                             name="email"/></div>
+                                                                             name="email" onChange={event => setLoginDetail({...loginDetail,email:event.target.value})} value={loginDetail.email||""}/></div>
                                                 <div className="mb-3"><input className="form-control form-control-user"
                                                                              type="password" id="exampleInputPassword"
-                                                                             placeholder="Password" name="password"/>
+                                                                             placeholder="Password" name="password" onChange={event => setLoginDetail({...loginDetail,password:event.target.value})} value={loginDetail.password||""}/>
                                                 </div>
                                                 <div className="mb-3">
                                                     <div className="custom-control custom-checkbox small">
@@ -37,16 +61,16 @@ export default function Login(){
                                                             htmlFor="formCheck-1">Remember Me</label></div>
                                                     </div>
                                                 </div>
-                                                <button className="btn btn-primary d-block btn-user w-100" type="submit"
+                                                <div className="btn btn-primary d-block btn-user w-100"  onClick={handleLogin}
                                                         style={{background: "var(--bs-dark)"}}>Login
-                                                </button>
-                                                <hr/><a
+                                                </div>
+                                                <hr/><div
                                                     className="btn btn-primary d-block btn-google btn-user w-100 mb-2"
-                                                    role="button"><i className="fab fa-google"></i>&nbsp; Login with
-                                                    Google</a><a
+                                                    ><i className="fab fa-google"></i>&nbsp; Login with
+                                                    Google</div><button
                                                     className="btn btn-primary d-block btn-facebook btn-user w-100"
-                                                    role="button"><i className="fab fa-facebook-f"></i>&nbsp; Login with
-                                                    Facebook</a>
+                                                    ><i className="fab fa-facebook-f"></i>&nbsp; Login with
+                                                    Facebook</button>
                                                     <hr/>
                                             </form>
                                             <div className="text-center"><Link className="small"

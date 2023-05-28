@@ -1,7 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
+import {auth} from "../DB_and_Auth"
+import {sendPasswordResetEmail} from "firebase/auth"
 
 export default function ForgetPassword(){
+    const [email,setEmail] = useState("");
+    const handleSubmit = async ()=>{
+
+        try {
+            await sendPasswordResetEmail(auth, email);
+            alert("Password reset link sent!");
+        } catch (err) {
+            console.error(err);
+            alert(err.message);
+        }
+    }
+
     return(
         <>
             <div className="container">
@@ -26,9 +40,9 @@ export default function ForgetPassword(){
                                                                              type="email" id="exampleInputEmail"
                                                                              aria-describedby="emailHelp"
                                                                              placeholder="Enter Email Address..."
-                                                                             name="email"/></div>
+                                                                             name="email" onChange={event => setEmail(event.target.value)} value={email}/></div>
                                                 <button className="btn btn-primary d-block btn-user w-100" type="submit"
-                                                        style={{background: "var(--bs-dark)"}}>Reset Password
+                                                        style={{background: "var(--bs-dark)"} } onClick={handleSubmit}>Reset Password
                                                 </button>
                                             </form>
                                             <div className="text-center">

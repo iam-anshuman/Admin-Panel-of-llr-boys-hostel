@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
+import {auth} from "../DB_and_Auth";
+
 
 export default function SearchNavAdmin() {
     const [adminCard,setAdminCard] = useState(false);
-
+    const currentUser = auth.currentUser;
     const  handleClick = ()=>{
         if (!adminCard){
             setAdminCard(true)
@@ -50,7 +52,7 @@ export default function SearchNavAdmin() {
                                                                              aria-expanded={adminCard?"true":"false"}
                                                                              data-bs-toggle="dropdown"
                                                                              to="/" onClick={handleClick}><span
-                             className="d-none d-lg-inline me-2 text-gray-600 small">Admin</span><img
+                             className="d-none d-lg-inline me-2 text-gray-600 small">{currentUser?currentUser.email:"Admin"}</span><img
                              className="border rounded-circle img-profile" src="assets/img/avatars/Fotor_AI%20(1).png"
                             style={{background: "url(&quot assets/img/avatars/Fotor_AI%20(1).png&quot) center / cover no-repeat"}}
                             alt={" "}/></Link>
