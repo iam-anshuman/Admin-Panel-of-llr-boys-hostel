@@ -1,16 +1,21 @@
 import React,{useEffect,useState} from "react";
-import {doc,deleteDoc,collection,getDocs} from "firebase/firestore"
+import {doc,deleteDoc,collection,getDocs } from "firebase/firestore"
 import {fireDB} from "../DB_and_Auth";
 export default function StudentQuery(){
     const [query,setQuery] = useState([]);
     useEffect(()=>{
         const getQuery = async ()=>{
-            const docSnap = await getDocs(collection(fireDB, "Queries"));
-            const Queries = docSnap.docs.map((query)=> ({
-                ...query.data(),
+            try{
+                const docSnap = await getDocs(collection(fireDB, "Queries"));
+                const Queries = docSnap.docs.map((query)=> ({
+                    ...query.data(),
                     id: query.id
             }));
             setQuery(Queries);
+            }catch (err) {
+                alert(err);
+            }
+
         };
         getQuery();
     },[])
@@ -19,7 +24,6 @@ export default function StudentQuery(){
         await deleteDoc(doc(fireDB, "Queries", id));
         window.location.reload();
     }
-
     return(
         <>
             <div className="container-fluid">

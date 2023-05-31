@@ -34,6 +34,8 @@ export default function NavbarAdmin(){
                                 className="fas fa-user"></i><span>StudentQuery</span></Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/AddStudent"><i
                                 className="fas fa-users"></i><span>Add Students</span></Link></li>
+                            <li className="nav-item"><Link className="nav-link" to="/Payments"><i
+                                className="fa fa-credit-card"></i><span>Payments</span></Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/Login"><i
                                 className="far fa-user-circle"></i><span>Login</span></Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/Register"><i

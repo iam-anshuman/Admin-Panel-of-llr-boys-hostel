@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import {auth} from "../DB_and_Auth";
+import {signOut} from "firebase/auth";
 
 
-export default function SearchNavAdmin() {
+export default function SearchNavAdmin({authStatus,onLogin}) {
     const [adminCard,setAdminCard] = useState(false);
-    const currentUser = auth.currentUser;
+    const currentUser=auth.currentUser;
     const  handleClick = ()=>{
         if (!adminCard){
             setAdminCard(true)
@@ -14,6 +15,17 @@ export default function SearchNavAdmin() {
         }
     }
 
+    const handleLogout = async ()=>{
+        try{
+            await signOut(auth);
+            window.location.reload();
+            alert("Sign out successfully");
+            onLogin(false)
+        }catch (err) {
+            console.log(err)
+        }
+
+    }
 
     return (
         <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top"
@@ -47,6 +59,7 @@ export default function SearchNavAdmin() {
                         </div>
                     </li>
                     <div className="d-none d-sm-block topbar-divider"></div>
+                    {authStatus&&
                      <li className="nav-item dropdown no-arrow">
                          <div className={"nav-item dropdown show no-arrow "}><Link className={`dropdown-toggle nav-link ${adminCard?"show":""}`}
                                                                              aria-expanded={adminCard?"true":"false"}
@@ -67,12 +80,14 @@ export default function SearchNavAdmin() {
                                 <i className="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log
                             </Link>
                                 <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/Logout">
+                                <div className="dropdown-item" onClick={handleLogout}>
                                     <i className="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout
-                                </Link>
+                                </div>
                             </div>
                         </div>
                     </li>
+
+                    }
                 </ul>
             </div>
         </nav>

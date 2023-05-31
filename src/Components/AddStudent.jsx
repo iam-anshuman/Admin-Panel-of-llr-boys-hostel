@@ -35,6 +35,7 @@ export default function AddStudent(){
             });
         }catch (err) {
             console.error(err);
+            alert("Login First to add student in database")
         }
     }
 

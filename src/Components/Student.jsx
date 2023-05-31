@@ -8,9 +8,15 @@ export default function Student(){
 
     useEffect(() => {
     const getStudentDetail = async () => {
-        const docSnap = await getDocs(collection(fireDB, "Hostelers"));
-        const studentData = docSnap.docs.map((student) => student.data());
-        setHosteler(studentData);
+        try{
+            const docSnap = await getDocs(collection(fireDB, "Hostelers"));
+            const studentData = docSnap.docs.map((student) => student.data());
+            setHosteler(studentData);
+        }catch (e) {
+            alert("You Are not logged in . kindly SignIn or SignUp for viewing details");
+        }
+
+
         };
 
         getStudentDetail();
@@ -57,8 +63,8 @@ export default function Student(){
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {hosteler.map((item)=>{
-                                    return  <tr key={item.id}>
+                                {hosteler.map((item,index)=>{
+                                    return  <tr key={index}>
                                     <td><img className="rounded-circle me-2" width="30" height="30"
                                              src="assets/img/avatars/avatar1.jpeg" alt={" "} />{item.name}</td>
                                     <td>{item.phone}</td>
@@ -76,7 +82,6 @@ export default function Student(){
                                     <td><strong>Office</strong></td>
                                     <td><strong>Age</strong></td>
                                     <td><strong>Start date</strong></td>
-                                    <td><strong>Salary</strong></td>
                                 </tr>
                                 </tfoot>
                             </table>

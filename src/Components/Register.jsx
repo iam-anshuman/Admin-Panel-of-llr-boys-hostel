@@ -102,12 +102,14 @@ export default function Register(){
     const handleSignOut = async ()=>{
         try{
             await signOut(auth);
-            alert("Sign out successfully")
+            window.location.reload();
+            alert("Sign out successfully");
+            // onLogin(false)
         }catch (err) {
             console.log(err)
         }
-
     }
+
     return(
         <>
             <div className="container">
@@ -153,13 +155,8 @@ export default function Register(){
                                         <hr/><div className="btn btn-primary d-block btn-google btn-user w-100 mb-2" onClick={handleGoogleSignIn}
                                                ><i className="fab fa-google"></i>&nbsp; Register with
                                             Google</div>
-                                        {/*<div className="btn btn-primary d-block btn-facebook btn-user w-100" onClick={handleFacebookSignIn}*/}
-                                        {/*                 ><i*/}
-                                        {/*    className="fab fa-facebook-f"></i>&nbsp; Register with Facebook</div>*/}
-                                            <hr/>
                                         <div className="btn btn-warning d-block btn-user w-100" onClick={handleSignOut}
-                                                         ><i
-                                            className="fab fa-facebook-f"></i>&nbsp; Sign OUt</div>
+                                                         >&nbsp; Sign Out</div>
                                             <hr/>
                                     </form>
                                     <div className="text-center"><Link className="small" to="/ForgetPassword">Forgot

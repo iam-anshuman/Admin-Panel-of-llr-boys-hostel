@@ -24,4 +24,6 @@ const googleProvider = new GoogleAuthProvider(app);
 
 const facebookProvider = new FacebookAuthProvider(app)
 
-export {fireDB, auth, googleProvider , facebookProvider};
+const currentUser = auth.currentUser;
+
+export {fireDB, auth, googleProvider , facebookProvider,currentUser};

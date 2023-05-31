@@ -8,7 +8,8 @@ export default function ForgetPassword(){
     const handleSubmit = async ()=>{
 
         try {
-            await sendPasswordResetEmail(auth, email);
+             await sendPasswordResetEmail(auth, email);
+
             alert("Password reset link sent!");
         } catch (err) {
             console.error(err);
