@@ -1,6 +1,6 @@
 import {initializeApp} from "firebase/app";
 import {getFirestore} from "firebase/firestore";
-import {getAuth, GoogleAuthProvider,FacebookAuthProvider} from "firebase/auth";
+import {getAuth, GoogleAuthProvider,FacebookAuthProvider } from "firebase/auth";
 
 
 const firebaseConfig = {
@@ -26,4 +26,6 @@ const facebookProvider = new FacebookAuthProvider(app)
 
 const currentUser = auth.currentUser;
 
-export {fireDB, auth, googleProvider , facebookProvider,currentUser};
+
+
+export {fireDB, auth, googleProvider , facebookProvider,currentUser };

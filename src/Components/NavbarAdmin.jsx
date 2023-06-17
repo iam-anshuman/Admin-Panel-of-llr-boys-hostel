@@ -19,7 +19,7 @@ export default function NavbarAdmin(){
                  style={{background: "var(--bs-dark)"}}>
                 <div className="container-fluid d-flex flex-column p-0"><a
                     className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-                    href="/#">
+                    href="/">
                     <div className="sidebar-brand-icon rotate-n-15"><i className="fas fa-hotel"
                                                                        style={{fontSize: "31px",transform: "rotate(15deg) skew(0deg)"}}></i>
                     </div>

@@ -1,8 +1,10 @@
 import React,{useEffect,useState} from "react";
 import {doc,deleteDoc,collection,getDocs } from "firebase/firestore"
 import {fireDB} from "../DB_and_Auth";
+import {Alert} from "react-bootstrap";
 export default function StudentQuery(){
     const [query,setQuery] = useState([]);
+    const [error,setError] = useState("")
     useEffect(()=>{
         const getQuery = async ()=>{
             try{
@@ -13,7 +15,7 @@ export default function StudentQuery(){
             }));
             setQuery(Queries);
             }catch (err) {
-                alert(err);
+                setError(err.message);
             }
 
         };
@@ -27,6 +29,8 @@ export default function StudentQuery(){
     return(
         <>
             <div className="container-fluid">
+                {error&&<Alert variant={"danger"}>{error} Please LogIn Your Account to see details</Alert>}
+
                 <h3 className="text-dark mb-4">Student Query : </h3>
                 <div className={"row row-cols-4"}  >
                 {query.map((item)=>{

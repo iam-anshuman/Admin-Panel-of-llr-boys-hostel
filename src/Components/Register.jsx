@@ -1,13 +1,8 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
-import{auth,googleProvider,fireDB} from "../DB_and_Auth";
-import {
-    createUserWithEmailAndPassword,
-    signOut,
-    signInWithPopup,
-    GoogleAuthProvider
-} from "firebase/auth"
-import {addDoc, collection, getDocs, query, where} from "firebase/firestore";
+
+import {useUserAuth} from "../Context/UserAuthContext";
+import {Alert} from "react-bootstrap";
 
 export default function Register(){
     const [user,setUser] = useState({
@@ -17,31 +12,14 @@ export default function Register(){
         Password:"",
         Confirm_Password:""
     });
-
-    const presentUser = auth.currentUser;
-    if(presentUser){
-            console.log(presentUser.displayName,presentUser.email,presentUser.uid);
-    }else {
-        console.log("No one signed in");
-    }
+    const [error,setError] = useState("")
+    const { signUp } = useUserAuth();
 
     const handleSignUp = async ()=>{
-        if ( user.Password.length<8){
-            alert("Password must be 8 characters");
-        }
-        else if(user.Password !== user.Confirm_Password){
-            alert("Password and confirm password must be same");
-        } else {
+        setError("")
+
             try{
-                const res = await createUserWithEmailAndPassword(auth,user.Email,user.Password);
-                const newUser = res.user;
-                await addDoc(collection(fireDB,"users"),{
-                    uid:newUser.uid,
-                    First_Name:user.First_Name,
-                    Last_Name:user.Last_Name,
-                    Email:user.Email,
-                    authProvide:"Local Email And Password"
-                })
+                await signUp(user.Email,user.Password);
                 setUser({
                     First_Name:"",
                     Last_Name:"",
@@ -50,65 +28,11 @@ export default function Register(){
                     Confirm_Password:""
                 })
             }catch (error) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log("Error Code : ",errorCode);
-                console.log("Error Message : ",errorMessage);
+                setError(error.message);
             }
         }
-    }
-
-    const handleGoogleSignIn = async ()=>{
-        try{
-            const res = await signInWithPopup(auth,googleProvider);
-            const user = res.user;
-            const q = query(collection(fireDB, "users"), where("uid", "==", user.uid));
-            const docs = await getDocs(q);
-            if (docs.docs.length === 0){
-                await addDoc(collection(fireDB, "users"), {
-                uid: user.uid,
-                name: user.displayName,
-                authProvider: "google",
-                email: user.email,
-      });
-
-            }
-        }catch (error) {
-                    const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.error(errorCode,errorMessage,email,credential);
-        }
 
 
-    }
-
-    // const handleFacebookSignIn = async ()=>{
-    //     try{
-    //         const userCredentials = signInWithPopup(auth,facebookProvider);
-    //         const accessToken =   (await userCredentials).accessToken;
-    //         const userDetail = (await userCredentials).user;
-    //         console.log(accessToken,userCredentials,userDetail)
-    //     }catch (err) {
-    //         const errorCode = err.code;
-    //         const errMessage = err.message;
-    //         console.log("Error Code : ",errorCode,"Error Message : ",errMessage)
-    //
-    //     }
-    // }
-
-    const handleSignOut = async ()=>{
-        try{
-            await signOut(auth);
-            window.location.reload();
-            alert("Sign out successfully");
-            // onLogin(false)
-        }catch (err) {
-            console.log(err)
-        }
-    }
 
     return(
         <>
@@ -125,6 +49,7 @@ export default function Register(){
                                     <div className="text-center">
                                         <h4 className="text-dark mb-4">Create an Account!</h4>
                                     </div>
+                                    {error&&<Alert variant={"danger"}>{error}</Alert>}
                                     <form className="user">
                                         <div className="row mb-3">
                                             <div className="col-sm-6 mb-3 mb-sm-0"><input
@@ -152,10 +77,11 @@ export default function Register(){
                                         <div className="btn btn-primary d-block btn-user w-100" type="button"
                                                 style={{background:" var(--bs-dark)"}} onClick={handleSignUp}>Register Account
                                         </div>
-                                        <hr/><div className="btn btn-primary d-block btn-google btn-user w-100 mb-2" onClick={handleGoogleSignIn}
-                                               ><i className="fab fa-google"></i>&nbsp; Register with
-                                            Google</div>
-                                        <div className="btn btn-warning d-block btn-user w-100" onClick={handleSignOut}
+                                        <hr/>
+                                        {/*<div className="btn btn-primary d-block btn-google btn-user w-100 mb-2"*/}
+                                        {/*       ><i className="fab fa-google"></i>&nbsp; Register with*/}
+                                        {/*    Google</div>*/}
+                                        <div className="btn btn-warning d-block btn-user w-100"
                                                          >&nbsp; Sign Out</div>
                                             <hr/>
                                     </form>
